@@ -8,11 +8,29 @@
     <script type="text/javascript" src="assets/js/lib/paper-full.js"></script>
     <script type="text/paperscript" canvas="myCanvas">
 
+      var circles = [];
+
       function onKeyDown(event) {
+        // capture random point
         var maxPoint = new Point(view.size.width, view.size.height);
         var randomPoint = Point.random();
         var point = maxPoint * randomPoint;
-        var circle = new Path.Circle(point, 10).fillColor = 'orange';
+
+        // create circle at random point
+        var newCircle = new Path.Circle(point, 500);
+        newCircle.fillColor = 'blue';
+
+        // push into circles array for onFrame transformation
+        circles.push(newCircle);
+      }
+
+      function onFrame(event) {
+        // loop through all circles and change size/hue with
+        // each new animation frame (frame rate defined by paperjs)
+        for(var i = 0; i < circles.length; i++){
+          circles[i].fillColor.hue += 1;
+          circles[i].scale(0.9);
+        }
       }
 
     </script>
